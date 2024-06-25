@@ -5,35 +5,49 @@ import {
   WalkPathIcon,
   UserIcon,
 } from "@/components";
-import { ReactNode } from "react";
+import { cn } from "@/helpers/cn";
+import { ComponentProps, ReactNode } from "react";
 
 export const NavbarList = ({
   children,
   className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) => {
+  ...props
+}: ComponentProps<"ul">) => {
   return (
     <ul
-      className={`my-4 border-t border-indigo-400/20 hover:border-indigo-400/40 ${className}`}
+      {...props}
+      className={cn(
+        "my-4 border-t border-indigo-400/20 hover:border-indigo-400/40 ${className}",
+        className
+      )}
     >
       {children}
     </ul>
   );
 };
 
-const NavbarListItem = ({ children }: { children: ReactNode }) => {
+const NavbarListItem = ({ children, className }: ComponentProps<"li">) => {
   return (
-    <li className="my-2 flex gap-2 items-center rounded-lg bg-transparent p-2 hover:bg-indigo-400/40 cursor-pointer hover:text-slate-100">
+    <li
+      className={cn(
+        "my-2 flex gap-2 items-center rounded-lg bg-transparent p-2 hover:bg-indigo-400/40 cursor-pointer hover:text-slate-100",
+        className
+      )}
+    >
       {children}
     </li>
   );
 };
 
-export const Navbar = () => {
+export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
   return (
-    <nav className="flex flex-col gap-4 h-screen text-slate-300 bg-slate-900 border-r border-indigo-400/20 hover:border-indigo-400/40 w-72 p-2">
+    <nav
+      {...props}
+      className={cn(
+        "flex flex-col gap-4 h-screen text-slate-300 bg-slate-900 border-r border-indigo-400/20 hover:border-indigo-400/40 w-72 p-2",
+        className
+      )}
+    >
       <div className="flex items-center justify-center">
         <img
           src="https://emersonbroga.com/e/assets/emersonbroga-logo-name-pink.png"
