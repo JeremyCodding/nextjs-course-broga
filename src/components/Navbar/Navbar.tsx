@@ -6,7 +6,8 @@ import {
   UserIcon,
 } from "@/components";
 import { cn } from "@/helpers/cn";
-import { ComponentProps, ReactNode } from "react";
+import Link from "next/link";
+import { ComponentProps } from "react";
 
 export const NavbarList = ({
   children,
@@ -39,6 +40,25 @@ const NavbarListItem = ({ children, className }: ComponentProps<"li">) => {
   );
 };
 
+const NavbarItemLink = ({
+  children,
+  className,
+  href,
+  ...props
+}: ComponentProps<typeof Link>) => {
+  return (
+    <NavbarListItem className={cn("p-0", className)}>
+      <Link
+        {...props}
+        className="flex gap-2 items-center rounded-lg p-2 w-full"
+        href={href}
+      >
+        {children}
+      </Link>
+    </NavbarListItem>
+  );
+};
+
 export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
   return (
     <nav
@@ -56,28 +76,28 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
         />
       </div>
       <NavbarList className="flex-grow">
-        <NavbarListItem>
+        <NavbarItemLink href="/">
           <HomeIcon className="w-4 h-4" />
           Home
-        </NavbarListItem>
-        <NavbarListItem>
+        </NavbarItemLink>
+        <NavbarItemLink href="/games">
           <GamepadIcon className="w-4 h-4" />
           Games
-        </NavbarListItem>
-        <NavbarListItem>
+        </NavbarItemLink>
+        <NavbarItemLink href="/top-ten">
           <AwardIcon className="w-5 h-5" />
           Top 10
-        </NavbarListItem>
-        <NavbarListItem>
+        </NavbarItemLink>
+        <NavbarItemLink href="/walkthroughs">
           <WalkPathIcon className="w-4 h-4" />
           Walkthroughs
-        </NavbarListItem>
+        </NavbarItemLink>
       </NavbarList>
       <NavbarList>
-        <NavbarListItem>
+        <NavbarItemLink href="/user">
           <UserIcon className="w-4 h-4" />
           User
-        </NavbarListItem>
+        </NavbarItemLink>
       </NavbarList>
     </nav>
   );
