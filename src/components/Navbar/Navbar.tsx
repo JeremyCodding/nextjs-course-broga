@@ -8,56 +8,7 @@ import {
 import { cn } from "@/helpers/cn";
 import Link from "next/link";
 import { ComponentProps } from "react";
-
-export const NavbarList = ({
-  children,
-  className = "",
-  ...props
-}: ComponentProps<"ul">) => {
-  return (
-    <ul
-      {...props}
-      className={cn(
-        "my-4 border-t border-indigo-400/20 hover:border-indigo-400/40 ${className}",
-        className
-      )}
-    >
-      {children}
-    </ul>
-  );
-};
-
-const NavbarListItem = ({ children, className }: ComponentProps<"li">) => {
-  return (
-    <li
-      className={cn(
-        "my-2 flex gap-2 items-center rounded-lg bg-transparent p-2 hover:bg-indigo-400/40 cursor-pointer hover:text-slate-100",
-        className
-      )}
-    >
-      {children}
-    </li>
-  );
-};
-
-const NavbarItemLink = ({
-  children,
-  className,
-  href,
-  ...props
-}: ComponentProps<typeof Link>) => {
-  return (
-    <NavbarListItem className={cn("p-0", className)}>
-      <Link
-        {...props}
-        className="flex gap-2 items-center rounded-lg p-2 w-full"
-        href={href}
-      >
-        {children}
-      </Link>
-    </NavbarListItem>
-  );
-};
+import { NavbarItemButton, NavbarItemLink, NavbarList } from "./modules";
 
 export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
   return (
@@ -92,6 +43,10 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
           <WalkPathIcon className="w-4 h-4" />
           Walkthroughs
         </NavbarItemLink>
+        <NavbarItemButton>
+          <WalkPathIcon className="w-4 h-4" />
+          Walkthroughs
+        </NavbarItemButton>
       </NavbarList>
       <NavbarList>
         <NavbarItemLink href="/user">
