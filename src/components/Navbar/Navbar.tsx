@@ -6,9 +6,9 @@ import {
   UserIcon,
 } from "@/components";
 import { cn } from "@/helpers/cn";
-import Link from "next/link";
 import { ComponentProps } from "react";
-import { NavbarItemButton, NavbarItemLink, NavbarList } from "./modules";
+import { NavbarItemLink, NavbarList } from "./modules";
+import Image from "next/image";
 
 export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
   return (
@@ -19,8 +19,10 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
         className
       )}
     >
-      <div className="flex items-center justify-center">
-        <img
+      <div className="flex items-center justify-center my-4">
+        <Image
+          width={112}
+          height={32}
           src="https://emersonbroga.com/e/assets/emersonbroga-logo-name-pink.png"
           alt=" Logo"
           className="w-auto h-12 p-2"
@@ -43,10 +45,6 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
           <WalkPathIcon className="w-4 h-4" />
           Walkthroughs
         </NavbarItemLink>
-        <NavbarItemButton>
-          <WalkPathIcon className="w-4 h-4" />
-          Walkthroughs
-        </NavbarItemButton>
       </NavbarList>
       <NavbarList>
         <NavbarItemLink href="/user">

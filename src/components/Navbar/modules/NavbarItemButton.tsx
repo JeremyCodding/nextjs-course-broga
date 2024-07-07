@@ -1,6 +1,8 @@
+"use client";
+
 import { cn } from "@/helpers/cn";
 import { ComponentProps } from "react";
-import { NavbarListItem } from "../Navbar";
+import { NavbarListItem } from "./NavbarListItem";
 
 export const NavbarItemButton = ({
   children,
