@@ -15,7 +15,7 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
     <nav
       {...props}
       className={cn(
-        "flex flex-col gap-4 h-screen text-slate-300 bg-slate-900 border-r border-indigo-400/20 hover:border-indigo-400/40 w-72 p-2",
+        "fixed top-0 left-0 flex flex-col h-screen text-slate-300 bg-slate-900 border-r border-indigo-400/20 hover:border-indigo-400/40 w-72 p-2",
         className
       )}
     >
