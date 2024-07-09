@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
 import articles from "../../src/data/articles.json";
+import games from "../../src/data/games.json";
+
 import { slugify } from "../../src/helpers/slugify";
 
 const prisma = new PrismaClient();
@@ -8,19 +10,32 @@ const prisma = new PrismaClient();
 const isDev = process.env.NODE_ENV === "development";
 
 async function main() {
-  await seedArticles();
-}
-
-async function seedArticles() {
+  console.log("DB seed");
   if (!isDev) {
     throw new Error("NODE_ENV is not a development environment.");
   }
 
-  await prisma.article.deleteMany();
-  await prisma.$executeRawUnsafe(
-    "DELETE FROM SQLITE_SEQUENCE WHERE name=$1",
-    "Article"
-  );
+  const [, , ...args] = process.argv;
+  //truncate
+  const truncate = !!args.find((arg) => arg === "-truncate");
+  const articles = !!args.find((arg) => arg === "articles");
+  const games = !!args.find((arg) => arg === "games");
+
+  if (truncate) {
+    if (articles) await truncateArticles();
+    if (games) await truncateGamesAndGenres();
+  }
+
+  if (articles) await seedArticles();
+  if (games) await seedGamesAndGenres();
+}
+
+async function seedArticles() {
+  console.log("seeding articles");
+
+  if (!isDev) {
+    throw new Error("NODE_ENV is not a development environment.");
+  }
 
   for (let article of articles) {
     const record = await prisma.article.create({
@@ -33,7 +48,75 @@ async function seedArticles() {
         publishedAt: new Date(article.publish_date),
       },
     });
+    console.log("*** created article", record.id, record.title);
   }
+}
+async function truncateArticles() {
+  console.log("truncating articles");
+
+  //truncate
+  await prisma.article.deleteMany();
+  await prisma.$executeRawUnsafe(
+    "DELETE FROM SQLITE_SEQUENCE WHERE name=$1",
+    "Article"
+  );
+}
+
+async function seedGamesAndGenres() {
+  console.log("seeding games and genres");
+
+  for (let game of games) {
+    const genres = game.genre.map((title) => {
+      const slug = slugify(title);
+      return {
+        genre: {
+          connectOrCreate: {
+            where: { slug },
+            create: {
+              title,
+              slug,
+            },
+          },
+        },
+      };
+    });
+
+    const record = await prisma.games.create({
+      data: {
+        title: game.title,
+        slug: game.slug,
+        yead: game.year,
+        image: game.fileName,
+        link: game.link || "#",
+        plataform: "Nintendo 64",
+        genres: {
+          create: genres,
+        },
+      },
+    });
+
+    console.log("*** created game", record.id, record.title);
+  }
+  return;
+}
+async function truncateGamesAndGenres() {
+  console.log("truncating games and genres");
+  await prisma.gameGenre.deleteMany();
+  await prisma.games.deleteMany();
+  await prisma.genres.deleteMany();
+  await prisma.$executeRawUnsafe(
+    "DELETE FROM SQLITE_SEQUENCE WHERE name=$1",
+    "Games"
+  );
+  await prisma.$executeRawUnsafe(
+    "DELETE FROM SQLITE_SEQUENCE WHERE name=$1",
+    "Genres"
+  );
+  await prisma.$executeRawUnsafe(
+    "DELETE FROM SQLITE_SEQUENCE WHERE name=$1",
+    "GameGenre"
+  );
+  return;
 }
 
 main()
