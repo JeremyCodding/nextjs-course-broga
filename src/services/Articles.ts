@@ -10,6 +10,7 @@ const ArticleService = {
       offset,
     });
     const total = await Article.count({});
+    const totalPages = Math.ceil(total / limit);
 
     return {
       data,
@@ -18,6 +19,7 @@ const ArticleService = {
         limit,
         offset,
         total,
+        totalPages,
       },
     };
   },
@@ -30,6 +32,7 @@ const ArticleService = {
       offset,
     });
     const total = await Article.count({});
+    const totalPages = Math.ceil((total - HOME_LATEST_COUNT) / limit);
 
     return {
       data,
@@ -38,6 +41,7 @@ const ArticleService = {
         limit,
         offset,
         total,
+        totalPages,
       },
     };
   },
@@ -52,6 +56,7 @@ const ArticleService = {
       offset,
     });
     const total = await Article.count({});
+    const totalPages = Math.ceil((total - HOME_LATEST_COUNT) / limit);
 
     return {
       data,
@@ -60,6 +65,7 @@ const ArticleService = {
         limit,
         offset,
         total,
+        totalPages,
       },
     };
   },

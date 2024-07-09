@@ -2,16 +2,19 @@ import articles from "@/data/articles.json";
 import Image from "next/image";
 import Article from "@/libs/database/Article";
 import ArticleService from "@/services/Articles";
+import { Pagination } from "@/components";
 
-export default async function Home() {
-  const articles = await ArticleService.getHomeArticles();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { page?: string; limit?: string };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const limit = Number(searchParams?.limit) || 10;
+
+  const articles = await ArticleService.getHomeArticles(currentPage, limit);
   const latestArticles = await ArticleService.getHomeLatestArticles();
-  // const articles = await Article.get({
-  //   orderBy: { publishedAt: "desc" },
-  //   limit: 14,
-  // });
   const highlithedArticles = latestArticles.data;
-  // const listArticles = articles.data.slice(4);
 
   return (
     <div className="ml-72">
@@ -72,7 +75,13 @@ export default async function Home() {
                   </div>
                 </div>
               ))}
-              <div>Pagination</div>
+              <div className="my-8">
+                <Pagination
+                  currentPage={articles.metadata.page}
+                  totalPages={articles.metadata.totalPages}
+                />
+              </div>
+              <div className="my-8" />
             </div>
           </div>
           <div className="col-span-4 bg-emerald-500">B</div>
