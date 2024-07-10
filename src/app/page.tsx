@@ -1,6 +1,4 @@
-import articles from "@/data/articles.json";
 import Image from "next/image";
-import Article from "@/libs/database/Article";
 import ArticleService from "@/services/Articles";
 import { Pagination } from "@/components";
 
@@ -81,7 +79,6 @@ export default async function Home({
                   totalPages={articles.metadata.totalPages}
                 />
               </div>
-              <div className="my-8" />
             </div>
           </div>
           <div className="col-span-4 bg-emerald-500">B</div>
