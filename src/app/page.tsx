@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ArticleService from "@/services/Articles";
-import { PageWrapper, Pagination } from "@/components";
+import { Hero, PageWrapper, Pagination } from "@/components";
+import GamesService from "@/services/Games";
 
 export default async function Home({
   searchParams,
@@ -14,12 +15,14 @@ export default async function Home({
   const latestArticles = await ArticleService.getHomeLatestArticles();
   const highlithedArticles = latestArticles.data;
 
+  const heroGames = await GamesService.getRandomGames(40);
+
   return (
     <PageWrapper>
-      <div className="w-full h-[35vh] bg-orange-400 flex-center">
-        <p>Algo chamativo</p>
-      </div>
+      <Hero games={heroGames.data} />
+
       <div className="container mx-auto my-6">
+        <h2 className="text-3xl my-10 underline">Latest Articles</h2>
         <div className="grid grid-cols-4 gap-4 h-[35vh]">
           {highlithedArticles.map((article) => (
             <div
@@ -42,7 +45,8 @@ export default async function Home({
           ))}
         </div>
       </div>
-      <div className="container mx-auto my-6">
+      <div className="container mx-auto my-10">
+        <h3 className="text-2xl my-6 underline">Articles</h3>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8  ">
             <div className="flex flex-col gap-4">
