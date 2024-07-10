@@ -1,11 +1,15 @@
-import { PrismaClient } from "@prisma/client";
+import { Article as ArticlePrisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const MAX_RECORDS = 50;
 const MIN_OFFSET = 0;
 
 const Article = {
-  getOne: async ({ where }: { where: { id: number } | { slug: string } }) => {
+  getOne: async ({
+    where,
+  }: {
+    where: Pick<ArticlePrisma, "id"> | Pick<ArticlePrisma, "slug">;
+  }) => {
     const record = await prisma.article.findUnique({ where });
 
     return record;
