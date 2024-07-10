@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ArticleService from "@/services/Articles";
-import { Pagination } from "@/components";
+import { PageWrapper, Pagination } from "@/components";
 
 export default async function Home({
   searchParams,
@@ -15,7 +15,7 @@ export default async function Home({
   const highlithedArticles = latestArticles.data;
 
   return (
-    <div className="ml-72">
+    <PageWrapper>
       <div className="w-full h-[35vh] bg-orange-400 flex-center">
         <p>Algo chamativo</p>
       </div>
@@ -84,6 +84,6 @@ export default async function Home({
           <div className="col-span-4 bg-emerald-500">B</div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
