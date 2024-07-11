@@ -2,9 +2,6 @@ import Article from "@/libs/database/Article";
 
 const HOME_LATEST_COUNT = 4;
 
-const sleep = async () =>
-  new Promise((resolve) => setTimeout(resolve, Math.random() * 10000));
-
 const ArticleService = {
   getArticles: async (page = 1, limit = 10) => {
     const offset = (page - 1) * limit;
@@ -49,7 +46,6 @@ const ArticleService = {
     };
   },
   getHomeLatestArticles: async () => {
-    sleep();
     const page = 1;
     const limit = HOME_LATEST_COUNT;
     const offset = 0;
