@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 const UserDB = {
   create: async (data: any) => {
-    prisma.user.create({ data });
+    return prisma.user.create({ data });
   },
 };
 
