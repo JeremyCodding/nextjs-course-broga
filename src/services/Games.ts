@@ -1,3 +1,4 @@
+import { getRandomIntArrayInRangeOpt } from "@/helpers/math";
 import Games from "@/libs/database/Games";
 
 const HOME_LATEST_COUNT = 4;
@@ -27,10 +28,14 @@ const GamesService = {
     const total = await Games.count({});
     const offset = Math.max(0, Math.floor(Math.random() * total) - limit);
 
-    const data = await Games.get({ limit, offset });
-    const sorted = data.sort(() => (Math.random() > 0.5 ? 1 : -1));
+    // const ids = getRandomIntArrayInRange(0, total, limit);
+    const ids = getRandomIntArrayInRangeOpt(0, total, limit);
+
+    console.log(ids);
+    const where = { id: { in: ids } };
+    const data = await Games.get({ where, limit });
     const totalPages = Math.ceil(total / limit);
-    sorted.map((game) => console.log(game.id, game.title));
+    // sorted.map((game) => console.log(game.id, game.title));
 
     return {
       data,

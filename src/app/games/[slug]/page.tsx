@@ -11,8 +11,6 @@ export default async function GameDetailPage({
   const { slug } = params;
   const game = await GamesService.getGameBySlug(slug);
 
-  console.log(game);
-
   if (!game) return null;
 
   return (

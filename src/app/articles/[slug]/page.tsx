@@ -10,8 +10,6 @@ export default async function ArticleDetailPage({
   const { slug } = params;
   const article = await ArticleService.getArticleBySlug(slug);
 
-  console.log(article);
-
   if (!article) return null;
 
   return (
