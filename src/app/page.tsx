@@ -3,6 +3,8 @@ import ArticleService from "@/services/Articles";
 import { Hero, PageWrapper, Pagination } from "@/components";
 import GamesService from "@/services/Games";
 import Link from "next/link";
+import { HomeLatestArticles, HomeLatestArticlesSkeleton } from "@/sections";
+import { Suspense } from "react";
 
 export default async function Home({
   searchParams,
@@ -13,40 +15,15 @@ export default async function Home({
   const limit = Number(searchParams?.limit) || 10;
 
   const articles = await ArticleService.getHomeArticles(currentPage, limit);
-  const latestArticles = await ArticleService.getHomeLatestArticles();
-  const highlithedArticles = latestArticles.data;
 
   const heroGames = await GamesService.getRandomGames(40);
 
   return (
     <PageWrapper>
       <Hero games={heroGames.data} />
-
-      <div className="container mx-auto my-6">
-        <h2 className="text-3xl my-10 underline">Latest Articles</h2>
-        <div className="grid grid-cols-4 gap-4 h-[35vh]">
-          {highlithedArticles.map((article) => (
-            <Link
-              className="flex-center relative overflow-hidden"
-              key={article.title}
-              href={`/articles/${article.slug}`}
-            >
-              <div className="h-full w-full">
-                <Image
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                  src={`/assets/images/articles/${article.image}`}
-                  alt={article.title}
-                  width={600}
-                  height={400}
-                />
-              </div>
-              <p className="absolute bottom-0 pt-6 pb-2 px-2 bg-gradient-to-t from-slate-900 via-slate-800 to-transparent w-full">
-                {article.title}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </div>
+      <Suspense fallback={<HomeLatestArticlesSkeleton />}>
+        <HomeLatestArticles />
+      </Suspense>
       <div className="container mx-auto my-10">
         <h3 className="text-2xl my-6 underline">Articles</h3>
         <div className="grid grid-cols-12 gap-4">
