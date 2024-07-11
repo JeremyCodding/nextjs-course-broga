@@ -6,7 +6,7 @@ export async function HomeLatestArticles() {
   const latestArticles = await ArticleService.getHomeLatestArticles();
   const highlithedArticles = latestArticles.data;
   return (
-    <div className="container mx-auto my-10 animate-pulse">
+    <div className="container mx-auto my-10">
       <h2 className="text-3xl my-10 underline">Latest Articles</h2>
       <div className="grid grid-cols-4 gap-4 h-[35vh]">
         {highlithedArticles.map((article) => (

@@ -6,7 +6,7 @@ import { getIntArray } from "@/helpers/math";
 export async function HomeLatestArticlesSkeleton() {
   const placeholders = getIntArray(0, 3);
   return (
-    <div className="container mx-auto my-6">
+    <div className="container mx-auto my-10 animate-pulse">
       <h2 className="text-3xl my-10 underline">
         <div className="bg-slate-600 w-1/6 h-9 rounded-lg" />
       </h2>
