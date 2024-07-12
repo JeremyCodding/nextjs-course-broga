@@ -17,8 +17,6 @@ const initialState: SignUpState = {
 export const SignUpForm = () => {
   const [formState, formAction] = useFormState(handleSignUpForm, initialState);
 
-  console.log("*** formState", formState);
-
   return (
     <form action={formAction}>
       <TextInput name="name" label="Name" error={formState.errors.name} />
@@ -35,7 +33,7 @@ export const SignUpForm = () => {
         error={formState.errors.password}
       />
       <TextInput
-        name="confirm-password"
+        name="passwordConfirmation"
         label="Confirm Password"
         type="password"
         error={formState.errors.passwordConfirmation}
