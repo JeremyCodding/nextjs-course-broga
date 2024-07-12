@@ -3,6 +3,8 @@
 import { z, ZodError } from "zod";
 
 import UserService from "@/services/Users";
+import { redirect } from "next/navigation";
+import { getZodErrors } from "@/helpers/zod";
 
 export type SignUpError = {
   name: null | string;
@@ -14,19 +16,6 @@ export type SignUpError = {
 export type SignUpState = {
   isValid: null | boolean;
   errors: SignUpError;
-};
-
-const getZodErrors = (error: unknown) => {
-  const isZodError = error instanceof ZodError;
-  if (isZodError) {
-    const { fieldErrors } = error.flatten();
-    const errors = Object.keys(fieldErrors).reduce((acc, key) => {
-      const message = fieldErrors[key]?.at(0);
-      return { ...acc, [key]: message };
-    }, {});
-
-    return errors;
-  }
 };
 
 const validateSignUpForm = (formData: FormData) => {
@@ -72,8 +61,8 @@ export const handleSignUpForm = async (prevState: any, formData: FormData) => {
     email: String(formData.get("email")),
     password: String(formData.get("password")),
   };
-  const record = await UserService.signUp(data);
-  console.log(record);
 
-  return { isValid: true, errors: {} };
+  await UserService.signUp(data);
+
+  redirect("/");
 };
