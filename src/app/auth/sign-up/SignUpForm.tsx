@@ -2,19 +2,43 @@
 
 import { SubmitButton, TextInput } from "@/components";
 import { useFormState } from "react-dom";
-import { handleSignUpForm } from "./actions";
+import { handleSignUpForm, SignUpState } from "./actions";
+
+const initialState: SignUpState = {
+  isValid: null,
+  errors: {
+    name: null,
+    email: null,
+    password: null,
+    passwordConfirmation: null,
+  },
+};
 
 export const SignUpForm = () => {
-  const [formState, formAction] = useFormState(handleSignUpForm, {});
+  const [formState, formAction] = useFormState(handleSignUpForm, initialState);
+
+  console.log("*** formState", formState);
+
   return (
     <form action={formAction}>
-      <TextInput name="name" label="Name" />
-      <TextInput name="email" label="Email" inputMode="email" />
-      <TextInput name="password" label="Password" type="password" />
+      <TextInput name="name" label="Name" error={formState.errors.name} />
+      <TextInput
+        name="email"
+        label="Email"
+        inputMode="email"
+        error={formState.errors.email}
+      />
+      <TextInput
+        name="password"
+        label="Password"
+        type="password"
+        error={formState.errors.password}
+      />
       <TextInput
         name="confirm-password"
         label="Confirm Password"
         type="password"
+        error={formState.errors.passwordConfirmation}
       />
       <SubmitButton label="Create Account" />
     </form>

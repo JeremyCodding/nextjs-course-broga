@@ -34,7 +34,7 @@ export const TextInput = ({
       />
       {error && (
         <div className="my-1">
-          <small className="text-sm text-red-500">Error</small>
+          <small className="text-sm text-red-500">{error}</small>
         </div>
       )}
     </div>
