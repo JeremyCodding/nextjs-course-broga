@@ -10,7 +10,6 @@ export const encrypt = async (payload: any) => {
     .setExpirationTime("1 min from now")
     .sign(secretKey);
 
-  console.log(result);
   return result;
 };
 

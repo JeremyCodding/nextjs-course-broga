@@ -6,7 +6,7 @@ export const createSession = (payload: string) => {
   cookies().set("session", payload, { expires, httpOnly: true });
 };
 
-export const getSession = async (payload: string) => {
+export const getSession = async () => {
   const session = cookies().get("session")?.value;
 
   if (!session) return null;

@@ -10,7 +10,11 @@ import { ComponentProps } from "react";
 import { NavbarItemLink, NavbarList } from "./modules";
 import Image from "next/image";
 
-export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
+export const Navbar = ({
+  className,
+  ...props
+}: ComponentProps<"nav"> & { user?: any }) => {
+  const { user } = props;
   return (
     <nav
       {...props}
@@ -47,10 +51,17 @@ export const Navbar = ({ className, ...props }: ComponentProps<"nav">) => {
         </NavbarItemLink>
       </NavbarList>
       <NavbarList>
-        <NavbarItemLink href="/user">
-          <UserIcon className="w-4 h-4" />
-          User
-        </NavbarItemLink>
+        {user ? (
+          <NavbarItemLink href="/user">
+            <UserIcon className="w-4 h-4" />
+            {user.name}
+          </NavbarItemLink>
+        ) : (
+          <NavbarItemLink href="/auth/sign-in">
+            <UserIcon className="w-4 h-4" />
+            Login
+          </NavbarItemLink>
+        )}
       </NavbarList>
     </nav>
   );

@@ -1,10 +1,14 @@
 "use server";
 
-import { isValid, z, ZodError } from "zod";
+import { z } from "zod";
 
 import UserService from "@/services/Users";
 import { redirect } from "next/navigation";
 import { getZodErrors } from "@/helpers/zod";
+import { encrypt } from "@/helpers/jwt";
+import { cookies } from "next/headers";
+import { createSession } from "@/helpers/session";
+import { revalidatePath } from "next/cache";
 
 export type SignInError = {
   name: null | string;
@@ -46,9 +50,14 @@ export const handleSignInForm = async (prevState: any, formData: FormData) => {
     password: String(formData.get("password")),
   };
 
-  console.log("All good", data);
+  const user = await UserService.signIn(data);
 
-  // await UserService.signIn(data);
+  if (!user) return { isValid: false, errors: {} };
 
-  return { isValid: true, errors: {} };
+  const payload = { uuid: user.uuid, email: user.email, name: user.name };
+  const jwt = await encrypt(payload);
+  createSession(jwt);
+
+  revalidatePath("/");
+  return redirect("/");
 };

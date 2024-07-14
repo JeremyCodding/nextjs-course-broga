@@ -34,7 +34,6 @@ const GamesService = {
     const where = { id: { in: ids } };
     const data = await Games.get({ where, limit });
     const totalPages = Math.ceil(total / limit);
-    // sorted.map((game) => console.log(game.id, game.title));
 
     return {
       data,
