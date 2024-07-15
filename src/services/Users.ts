@@ -1,15 +1,19 @@
 import { createHash, verifyHash } from "@/helpers/hash";
 import UserDB from "@/libs/database/Users";
+import { User } from "@prisma/client";
 
 const HOME_LATEST_COUNT = 4;
 
 const UserService = {
-  signUp: async (data: any) => {
+  signUp: async (data: Pick<User, "name" | "email" | "password">) => {
     const passwordHash = await createHash(data.password);
+    if (!passwordHash) {
+      throw new Error("Unable to create Hash");
+    }
 
     return UserDB.create({ ...data, password: passwordHash });
   },
-  signIn: async (data: any) => {
+  signIn: async (data: Pick<User, "email" | "password">) => {
     const record = await UserDB.findByEmail(data.email);
 
     if (!record) return null;

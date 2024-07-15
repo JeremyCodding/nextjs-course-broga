@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ArticleService from "@/services/Articles";
+import { getArticleImage, getArticleUrl } from "@/helpers/articles";
 
 export async function HomeLatestArticles() {
   const latestArticles = await ArticleService.getHomeLatestArticles();
@@ -13,12 +14,12 @@ export async function HomeLatestArticles() {
           <Link
             className="flex-center relative overflow-hidden"
             key={article.title}
-            href={`/articles/${article.slug}`}
+            href={getArticleUrl(article.slug)}
           >
             <div className="h-full w-full">
               <Image
                 className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                src={`/assets/images/articles/${article.image}`}
+                src={getArticleImage(article.image)}
                 alt={article.title}
                 width={600}
                 height={400}
