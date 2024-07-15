@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { decrypt, encrypt } from "@/helpers/jwt";
 
 const SESSION_NAME = "session";
-const generateExpires = () => new Date(Date.now() + 60 * 1000);
+const generateExpires = () => new Date(Date.now() + 60 * 60 * 1000);
 
 export const createSession = (payload: string) => {
   const expires = generateExpires();
@@ -32,4 +32,8 @@ export const updateSession = async () => {
   };
 
   return updatedSession;
+};
+
+export const logout = async () => {
+  cookies().set(SESSION_NAME, "", { expires: new Date(0) });
 };

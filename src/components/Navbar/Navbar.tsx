@@ -4,11 +4,14 @@ import {
   AwardIcon,
   WalkPathIcon,
   UserIcon,
+  LogoutIcon,
+  FormButton,
 } from "@/components";
 import { cn } from "@/helpers/cn";
 import { ComponentProps } from "react";
-import { NavbarItemLink, NavbarList } from "./modules";
+import { NavbarItemLink, NavbarList, NavbarListItem } from "./modules";
 import Image from "next/image";
+import { handleSignOutForm } from "@/app/auth/sign-out/action";
 
 export const Navbar = ({
   className,
@@ -52,10 +55,16 @@ export const Navbar = ({
       </NavbarList>
       <NavbarList>
         {user ? (
-          <NavbarItemLink href="/user">
-            <UserIcon className="w-4 h-4" />
-            {user.name}
-          </NavbarItemLink>
+          <>
+            <NavbarItemLink href="/user">
+              <UserIcon className="w-4 h-4" />
+              {user.name}
+            </NavbarItemLink>
+            <NavbarListItem>
+              <LogoutIcon className="w-4 h-4" />
+              <FormButton action={handleSignOutForm} label="Logout" />
+            </NavbarListItem>
+          </>
         ) : (
           <NavbarItemLink href="/auth/sign-in">
             <UserIcon className="w-4 h-4" />
