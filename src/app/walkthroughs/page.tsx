@@ -1,3 +1,9 @@
+import { PageWrapper } from "@/components";
+
 export default function Walkthroughs() {
-  return <h1>Página Walkthrough</h1>;
+  return (
+    <PageWrapper>
+      <h1>Página Walkthrough</h1>
+    </PageWrapper>
+  );
 }

@@ -1,7 +1,9 @@
+import { PageWrapper } from "@/components";
+
 export default function Nintendo() {
   return (
-    <div>
+    <PageWrapper>
       <h1>Página Nintendo</h1>
-    </div>
+    </PageWrapper>
   );
 }

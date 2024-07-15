@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { PageWrapper, Pagination } from "@/components";
 import GamesService from "@/services/Games";
-import { getGameImage } from "@/helpers/games";
+import { getGameImage, getGameLink } from "@/helpers/games";
 import Link from "next/link";
 
 export default async function Games({
@@ -23,7 +23,7 @@ export default async function Games({
           {games.data.map((game) => {
             return (
               <Link
-                href={`/games/${game.slug}`}
+                href={getGameLink(game.slug)}
                 key={game.slug}
                 className="flex-center flex-col relative overflow-hidden "
               >
