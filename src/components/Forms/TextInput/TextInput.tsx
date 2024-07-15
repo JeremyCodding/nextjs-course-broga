@@ -2,8 +2,8 @@ import { cn } from "@/helpers/cn";
 import { ComponentProps } from "react";
 
 export type TextInputProps = ComponentProps<"input"> & {
-  label?: string | null | undefined;
-  error?: string | null | undefined;
+  label?: string | null;
+  error?: string | null;
 };
 
 export const TextInput = ({
@@ -33,7 +33,7 @@ export const TextInput = ({
         )}
       />
       {error && (
-        <div className="my-1">
+        <div>
           <small className="text-sm text-red-500">{error}</small>
         </div>
       )}

@@ -2,7 +2,7 @@ import { cn } from "@/helpers/cn";
 import { ComponentProps } from "react";
 
 export type FormButtonProps = ComponentProps<"button"> & {
-  label: string | null | undefined;
+  label: string | null;
   action: () => void;
 };
 
