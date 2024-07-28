@@ -6,7 +6,7 @@ export default async function SeedPage() {
     let ranTruncate = true;
     let ranSeed = true;
 
-    if (process.env.DB_TRUNCATE) {
+    if (process.env.DB_TRUNCAT) {
       truncate();
       ranTruncate = true;
     }
